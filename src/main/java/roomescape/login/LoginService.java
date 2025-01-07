@@ -20,7 +20,7 @@ public class LoginService {
     public JwtResponse login(LoginRequest loginRequest) {
 
         try {
-            Member member = memberDao.findByEmailAndPassword(loginRequest.getEmail(), loginRequest.getPassword());
+            Member member = memberDao.findByEmailAndPassword(loginRequest.email(), loginRequest.password());
             return jwtProvider.createAccessToken(member);
         } catch (EmptyResultDataAccessException e) {
             throw new MemberNotFoundException("이메일 혹은 비밀번호가 맞지 않습니다.");
