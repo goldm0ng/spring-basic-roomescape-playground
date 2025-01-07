@@ -1,15 +1,5 @@
 package roomescape.login;
 
-import jakarta.validation.constraints.NotEmpty;
-import lombok.Data;
-
-@Data
-public class LoginRequest {
-
-    @NotEmpty
-    private String email;
-
-    @NotEmpty
-    private String password;
-
+public record LoginRequest(String email,
+                           String password) {
 }
