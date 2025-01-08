@@ -33,7 +33,7 @@ public class JwtUtils {
 
             return new JwtResponse(accessToken);
         } catch (JwtException e) {
-            throw new JwtProviderException("JWT 생성에 실패하였습니다.");
+            throw new JwtProviderException("JWT 생성에 실패하였습니다.", e);
         }
     }
 
@@ -54,7 +54,7 @@ public class JwtUtils {
 
             return new MemberAuthInfo(name, role);
         } catch (JwtException e) {
-            throw new JwtValidationException("유효하지 않은 JWT 토큰입니다.");
+            throw new JwtValidationException("유효하지 않은 JWT 토큰입니다.", e);
         }
     }
 
@@ -72,7 +72,7 @@ public class JwtUtils {
 
             return new JwtResponse(accessToken);
         } catch (Exception e) {
-            throw new JwtValidationException("쿠키에서 토큰 추출 중 오류가 발생했습니다.");
+            throw new JwtValidationException("쿠키에서 토큰 추출 중 오류가 발생했습니다.", e);
         }
     }
 }

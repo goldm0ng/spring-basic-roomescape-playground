@@ -23,7 +23,7 @@ public class LoginService {
             Member member = memberDao.findByEmailAndPassword(loginRequest.email(), loginRequest.password());
             return jwtUtils.createAccessToken(member);
         } catch (EmptyResultDataAccessException e) {
-            throw new MemberNotFoundException("이메일 혹은 비밀번호가 맞지 않습니다.");
+            throw new MemberNotFoundException("이메일 혹은 비밀번호가 맞지 않습니다.", e);
         }
     }
 
@@ -33,7 +33,7 @@ public class LoginService {
             Member member = memberDao.findByName(memberAuthInfo.name());
             return new LoginCheckResponse(member.getName());
         } catch (EmptyResultDataAccessException e) {
-            throw new MemberNotFoundException("로그인이 되지 않은 상태입니다.");
+            throw new MemberNotFoundException("로그인이 되지 않은 상태입니다.", e);
         }
     }
 }
