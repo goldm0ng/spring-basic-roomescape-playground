@@ -18,6 +18,7 @@ import roomescape.authentication.jwt.JwtUtils;
 public class LoginController {
 
     private final LoginService loginService;
+    private final JwtUtils jwtUtils;
 
     @PostMapping("/login")
     public void login(@Valid @RequestBody LoginRequest loginRequest, HttpServletResponse response) {
@@ -31,8 +32,8 @@ public class LoginController {
 
     @GetMapping("/login/check")
     public LoginCheckResponse checkLogin(HttpServletRequest request) {
-        JwtResponse jwtResponse = JwtUtils.extractTokenFromCookie(request.getCookies());
-        MemberAuthInfo memberAuthInfo = JwtUtils.extractMemberAuthInfoFromToken(jwtResponse.accessToken());
+        JwtResponse jwtResponse = jwtUtils.extractTokenFromCookie(request.getCookies());
+        MemberAuthInfo memberAuthInfo = jwtUtils.extractMemberAuthInfoFromToken(jwtResponse.accessToken());
         LoginCheckResponse loginCheckResponse = loginService.checkLogin(memberAuthInfo);
 
         return loginCheckResponse;

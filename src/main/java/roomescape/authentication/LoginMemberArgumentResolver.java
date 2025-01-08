@@ -9,7 +9,6 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
-import roomescape.authentication.jwt.JwtProvider;
 import roomescape.authentication.jwt.JwtResponse;
 import roomescape.authentication.jwt.JwtUtils;
 
@@ -17,7 +16,7 @@ import roomescape.authentication.jwt.JwtUtils;
 @RequiredArgsConstructor
 public class LoginMemberArgumentResolver implements HandlerMethodArgumentResolver {
 
-    private final JwtProvider jwtProvider;
+    private final JwtUtils jwtUtils;
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
@@ -28,11 +27,11 @@ public class LoginMemberArgumentResolver implements HandlerMethodArgumentResolve
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
         HttpServletRequest request = ((ServletWebRequest) webRequest).getRequest();
 
-        JwtResponse jwtResponse = JwtUtils.extractTokenFromCookie(request.getCookies());
+        JwtResponse jwtResponse = jwtUtils.extractTokenFromCookie(request.getCookies());
         if (jwtResponse.accessToken() == null) {
             return null;
         }
 
-        return JwtUtils.extractMemberAuthInfoFromToken(jwtResponse.accessToken());
+        return jwtUtils.extractMemberAuthInfoFromToken(jwtResponse.accessToken());
     }
 }
