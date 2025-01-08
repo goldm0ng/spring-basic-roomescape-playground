@@ -1,13 +1,26 @@
 package roomescape.reservation;
 
+import jakarta.persistence.*;
 import roomescape.theme.Theme;
 import roomescape.time.Time;
 
+@Entity
 public class Reservation {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
+
     private String date;
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "time_id")
     private Time time;
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "theme_id")
     private Theme theme;
 
     public Reservation(Long id, String name, String date, Time time, Theme theme) {
