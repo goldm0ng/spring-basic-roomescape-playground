@@ -1,4 +1,4 @@
-package roomescape.jwt;
+package roomescape.authentication.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;

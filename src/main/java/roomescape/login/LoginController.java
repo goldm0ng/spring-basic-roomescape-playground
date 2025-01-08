@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import roomescape.authentication.MemberAuthInfo;
-import roomescape.jwt.JwtResponse;
-import roomescape.jwt.JwtUtils;
+import roomescape.authentication.jwt.JwtResponse;
+import roomescape.authentication.jwt.JwtUtils;
 
 @RestController
 @RequiredArgsConstructor

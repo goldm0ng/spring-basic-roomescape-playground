@@ -5,9 +5,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
-import roomescape.jwt.JwtProvider;
-import roomescape.jwt.JwtResponse;
-import roomescape.jwt.JwtUtils;
+import roomescape.authentication.jwt.JwtProvider;
+import roomescape.authentication.jwt.JwtResponse;
+import roomescape.authentication.jwt.JwtUtils;
 
 @Component
 @RequiredArgsConstructor

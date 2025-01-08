@@ -9,9 +9,9 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
-import roomescape.jwt.JwtProvider;
-import roomescape.jwt.JwtResponse;
-import roomescape.jwt.JwtUtils;
+import roomescape.authentication.jwt.JwtProvider;
+import roomescape.authentication.jwt.JwtResponse;
+import roomescape.authentication.jwt.JwtUtils;
 
 @Component
 @RequiredArgsConstructor
