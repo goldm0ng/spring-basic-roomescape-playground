@@ -8,6 +8,16 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GeneralExceptionHandler {
 
+    @ExceptionHandler(TimeNotFoundException.class)
+    public ResponseEntity<String> handleTimeNotFound(TimeNotFoundException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+    }
+
+    @ExceptionHandler(ThemeNotFoundException.class)
+    public ResponseEntity<String> handleThemeNotFound(ThemeNotFoundException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+    }
+
     @ExceptionHandler(MemberNotFoundException.class)
     public ResponseEntity<String> handleMemberNotFound(MemberNotFoundException e) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
