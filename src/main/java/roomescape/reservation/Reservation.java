@@ -1,6 +1,9 @@
 package roomescape.reservation;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+import roomescape.member.Member;
 import roomescape.theme.Theme;
 import roomescape.time.Time;
 
@@ -15,22 +18,27 @@ public class Reservation {
 
     private String date;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "time_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Time time;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "theme_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Theme theme;
 
-    public Reservation(Long id, String name, String date, Time time, Theme theme) {
-        this.id = id;
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
+
+    public Reservation(Member member, String name, String date, Time time, Theme theme) {
+        this.member = member;
         this.name = name;
         this.date = date;
         this.time = time;
         this.theme = theme;
     }
-
     public Reservation(String name, String date, Time time, Theme theme) {
         this.name = name;
         this.date = date;
