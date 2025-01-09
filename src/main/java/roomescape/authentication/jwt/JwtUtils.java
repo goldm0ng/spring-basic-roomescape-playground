@@ -49,7 +49,7 @@ public class JwtUtils {
                     .parseClaimsJws(token)
                     .getBody();
 
-            Long id = claims.get("id", Long.class);
+            Long id = Long.valueOf(claims.getSubject());
             String name = claims.get("name", String.class);
             String role = claims.get("role", String.class);
 
