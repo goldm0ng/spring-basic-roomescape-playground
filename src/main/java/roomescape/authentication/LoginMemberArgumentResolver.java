@@ -9,14 +9,12 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
-import roomescape.authentication.jwt.JwtResponse;
-import roomescape.authentication.jwt.JwtUtils;
 
 @Component
 @RequiredArgsConstructor
 public class LoginMemberArgumentResolver implements HandlerMethodArgumentResolver {
 
-    private final JwtUtils jwtUtils;
+    private final AuthenticationService authenticationService;
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
@@ -27,11 +25,11 @@ public class LoginMemberArgumentResolver implements HandlerMethodArgumentResolve
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
         HttpServletRequest request = ((ServletWebRequest) webRequest).getRequest();
 
-        JwtResponse jwtResponse = jwtUtils.extractTokenFromCookie(request.getCookies());
-        if (jwtResponse.accessToken() == null) {
+        AuthenticationResponse authenticationResponse = authenticationService.extractToken(request.getCookies());
+        if (authenticationResponse.accessToken() == null) {
             return null;
         }
 
-        return jwtUtils.extractMemberAuthInfoFromToken(jwtResponse.accessToken());
+        return authenticationService.extractMemberInfo(authenticationResponse.accessToken());
     }
 }
