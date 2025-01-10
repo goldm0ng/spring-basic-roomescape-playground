@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import roomescape.authentication.MemberAuthInfo;
-import roomescape.authentication.jwt.JwtResponse;
-import roomescape.authentication.jwt.JwtUtils;
+import roomescape.authentication.AuthenticationResponse;
+import roomescape.authentication.AuthenticationService;
 import roomescape.member.Member;
 import roomescape.member.MemberDao;
 import roomescape.exception.MemberNotFoundException;
@@ -15,13 +15,12 @@ import roomescape.exception.MemberNotFoundException;
 public class LoginService {
 
     private final MemberDao memberDao;
-    private final JwtUtils jwtUtils;
-
-    public JwtResponse login(LoginRequest loginRequest) {
+    private final AuthenticationService authenticationService;
+    public AuthenticationResponse login(LoginRequest loginRequest) {
 
         try {
             Member member = memberDao.findByEmailAndPassword(loginRequest.email(), loginRequest.password());
-            return jwtUtils.createAccessToken(member);
+            return authenticationService.createToken(member);
         } catch (EmptyResultDataAccessException e) {
             throw new MemberNotFoundException("이메일 혹은 비밀번호가 맞지 않습니다.", e);
         }

@@ -9,22 +9,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import roomescape.authentication.AuthenticationService;
 import roomescape.authentication.MemberAuthInfo;
-import roomescape.authentication.jwt.JwtResponse;
-import roomescape.authentication.jwt.JwtUtils;
+import roomescape.authentication.AuthenticationResponse;
 
 @RestController
 @RequiredArgsConstructor
 public class LoginController {
 
     private final LoginService loginService;
-    private final JwtUtils jwtUtils;
+    private final AuthenticationService authenticationService;
 
     @PostMapping("/login")
     public void login(@Valid @RequestBody LoginRequest loginRequest, HttpServletResponse response) {
-        JwtResponse jwtResponse = loginService.login(loginRequest);
+        AuthenticationResponse authenticationResponse = loginService.login(loginRequest);
 
-        Cookie cookie = new Cookie("token", jwtResponse.accessToken());
+        Cookie cookie = new Cookie("token", authenticationResponse.accessToken());
         cookie.setHttpOnly(true);
         cookie.setPath("/");
         response.addCookie(cookie);
@@ -32,8 +32,8 @@ public class LoginController {
 
     @GetMapping("/login/check")
     public LoginCheckResponse checkLogin(HttpServletRequest request) {
-        JwtResponse jwtResponse = jwtUtils.extractTokenFromCookie(request.getCookies());
-        MemberAuthInfo memberAuthInfo = jwtUtils.extractMemberAuthInfoFromToken(jwtResponse.accessToken());
+        AuthenticationResponse authenticationResponse = authenticationService.extractToken(request.getCookies());
+        MemberAuthInfo memberAuthInfo = authenticationService.extractMemberInfo(authenticationResponse.accessToken());
         LoginCheckResponse loginCheckResponse = loginService.checkLogin(memberAuthInfo);
 
         return loginCheckResponse;
