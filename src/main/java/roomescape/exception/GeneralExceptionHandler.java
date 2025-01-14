@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GeneralExceptionHandler {
 
     @ExceptionHandler({MemberNotFoundException.class, JwtValidationException.class, JwtProviderException.class})
-    public ResponseEntity<String> handleMemberNotFound(MemberNotFoundException e) {
+    public ResponseEntity<String> handleMemberNotFound(Exception e) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
     }
 
     @ExceptionHandler({TimeNotFoundException.class, ThemeNotFoundException.class})
-    public ResponseEntity<String> handleTimeNotFound(TimeNotFoundException e) {
+    public ResponseEntity<String> handleTimeNotFound(Exception e) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }
 
@@ -27,7 +27,7 @@ public class GeneralExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleGeneralException(Exception e) {
-        log.error("Exception [Err_Mas]: {}", e.getMessage());
+        log.error("Exception [Err_Location] : {}", e.getStackTrace()[0]);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
     }
 }
