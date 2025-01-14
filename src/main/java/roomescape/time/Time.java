@@ -1,8 +1,11 @@
 package roomescape.time;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 @Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Time {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,9 +21,6 @@ public class Time {
 
     public Time(String value) {
         this.value = value;
-    }
-
-    public Time() {
     }
 
     public Long getId() {

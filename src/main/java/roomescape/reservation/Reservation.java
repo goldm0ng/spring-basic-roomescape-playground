@@ -1,6 +1,8 @@
 package roomescape.reservation;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import roomescape.member.Member;
@@ -8,6 +10,7 @@ import roomescape.theme.Theme;
 import roomescape.time.Time;
 
 @Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Reservation {
 
     @Id
@@ -44,10 +47,6 @@ public class Reservation {
         this.date = date;
         this.time = time;
         this.theme = theme;
-    }
-
-    public Reservation() {
-
     }
 
     public Long getId() {
