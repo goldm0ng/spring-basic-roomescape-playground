@@ -54,11 +54,11 @@ public class ReservationService {
         validateDuplicateReservation(reservationRequest);
 
         Reservation reservation = new Reservation (
-                member,
                 reservationRequest.name(),
                 reservationRequest.date(),
                 time,
-                theme
+                theme,
+                member
         );
 
         reservationRepository.save(reservation);

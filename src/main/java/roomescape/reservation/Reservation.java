@@ -35,12 +35,12 @@ public class Reservation {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    public Reservation(Member member, String name, String date, Time time, Theme theme) {
-        this.member = member;
+    public Reservation(String name, String date, Time time, Theme theme, Member member) {
         this.name = name;
         this.date = date;
         this.time = time;
         this.theme = theme;
+        this.member = member;
     }
     public Reservation(String name, String date, Time time, Theme theme) {
         this.name = name;
