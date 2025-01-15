@@ -2,11 +2,9 @@ package roomescape.authentication;
 
 import jakarta.servlet.http.Cookie;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 import roomescape.authentication.jwt.JwtAuthenticationInfoExtractor;
 import roomescape.member.Member;
 
-@Service
 @RequiredArgsConstructor
 public class AuthenticationService {
 
