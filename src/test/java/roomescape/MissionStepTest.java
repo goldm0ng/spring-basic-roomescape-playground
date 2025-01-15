@@ -5,9 +5,11 @@ import io.restassured.http.ContentType;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.stereotype.Component;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ActiveProfiles;
 import roomescape.authentication.AuthenticationService;
 import roomescape.reservation.MyReservationResponse;
 import roomescape.reservation.ReservationResponse;
@@ -19,26 +21,10 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@ActiveProfiles("test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class MissionStepTest {
-
-    private String createToken(String email, String password) {
-        Map<String, String> params = new HashMap<>();
-
-        params.put("email", email);
-        params.put("password", password);
-
-        ExtractableResponse<Response> response = RestAssured.given().log().all()
-                .contentType(ContentType.JSON)
-                .body(params)
-                .when().post("/login")
-                .then().log().all()
-                .statusCode(200)
-                .extract();
-
-        return response.headers().get("Set-Cookie").getValue().split(";")[0].split("=")[1];
-    }
 
     @Test
     void 일단계() {
@@ -189,5 +175,29 @@ public class MissionStepTest {
     void 칠단계() {
         Component componentAnnotation = AuthenticationService.class.getAnnotation(Component.class);
         assertThat(componentAnnotation).isNull();
+    }
+
+    @Value("${roomescape.auth.jwt.secret}")
+    private String secretKey;
+    @Test
+    void 팔단계() {
+        assertThat(secretKey).isNotBlank();
+    }
+
+    private String createToken(String email, String password) {
+        Map<String, String> params = new HashMap<>();
+
+        params.put("email", email);
+        params.put("password", password);
+
+        ExtractableResponse<Response> response = RestAssured.given().log().all()
+                .contentType(ContentType.JSON)
+                .body(params)
+                .when().post("/login")
+                .then().log().all()
+                .statusCode(200)
+                .extract();
+
+        return response.headers().get("Set-Cookie").getValue().split(";")[0].split("=")[1];
     }
 }
