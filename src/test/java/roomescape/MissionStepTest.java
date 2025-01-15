@@ -53,6 +53,7 @@ public class MissionStepTest {
                 .extract();
 
         assertThat(checkResponse.body().jsonPath().getString("name")).isEqualTo("어드민");
+
     }
 
     @Test
@@ -182,5 +183,4 @@ public class MissionStepTest {
 
         assertThat(status).isEqualTo("1번째 예약대기");
     }
-
 }
