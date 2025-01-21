@@ -27,7 +27,7 @@ public class GeneralExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleGeneralException(Exception e) {
-        log.error("Exception [Err_Location] : {}", e.getStackTrace()[0]);
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        log.error("Exception [Err_Location] : {}", e.getStackTrace()[0], e);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("잠깐 문제가 생겼어요. 다음에 다시 시도해주세요.");
     }
 }
