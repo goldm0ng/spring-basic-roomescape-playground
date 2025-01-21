@@ -26,23 +26,13 @@ public class ReservationController {
 
     @PostMapping("/reservations")
     public ResponseEntity create(@RequestBody ReservationRequest reservationRequest, MemberAuthInfo memberAuthInfo) {
-        if ( memberAuthInfo == null
-                || reservationRequest.date() == null
-                || reservationRequest.theme() == null
-                || reservationRequest.time() == null) {
-            return ResponseEntity.badRequest().build();
-        }
-
         ReservationResponse reservation = reservationService.save(reservationRequest, memberAuthInfo);
-
         return ResponseEntity.created(URI.create("/reservations/" + reservation.id())).body(reservation);
     }
 
     @GetMapping("/reservations-mine")
     public List<MyReservationResponse> myReservationLists(MemberAuthInfo memberAuthInfo){
-
         List<MyReservationResponse> myReservations = reservationService.findMyReservations(memberAuthInfo);
-
         return myReservations;
     }
 

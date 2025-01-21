@@ -17,15 +17,7 @@ public class WaitingController {
 
     @PostMapping("/waitings")
     public ResponseEntity createWaiting(@RequestBody WaitingRequest waitingRequest, MemberAuthInfo memberAuthInfo) {
-        if (memberAuthInfo == null ||
-                waitingRequest.date() == null ||
-                waitingRequest.theme() == null ||
-                waitingRequest.time() == null) {
-            return ResponseEntity.badRequest().build();
-        }
-
         WaitingResponse response = waitingService.createWaiting(waitingRequest, memberAuthInfo);
-
         return ResponseEntity.created(URI.create("/waitings/" + response.id())).body(response);
     }
 

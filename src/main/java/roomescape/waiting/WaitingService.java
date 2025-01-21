@@ -27,6 +27,8 @@ public class WaitingService {
     private final MemberRepository memberRepository;
 
     public WaitingResponse createWaiting(WaitingRequest waitingRequest, MemberAuthInfo memberAuthInfo) {
+        validateWaitingRequest(waitingRequest);
+
         if (waitingRequest.name() == null){
             waitingRequest = new WaitingRequest(
                     memberAuthInfo.name(),
@@ -39,7 +41,6 @@ public class WaitingService {
                 .orElseThrow(() -> new ThemeNotFoundException("해당 테마를 찾을 수 없습니다."));
         Time time = timeRepository.findById(waitingRequest.time())
                 .orElseThrow(() -> new TimeNotFoundException("예약 시간을 찾을 수 없습니다."));
-
         Member member = null;
         if (memberAuthInfo.id() != null){ //관리자가 아닌, 사용자일 경우
             member = memberRepository.findById(memberAuthInfo.id())
@@ -65,5 +66,11 @@ public class WaitingService {
 
     public void cancelWaiting(Long id) {
         waitingRepository.deleteById(id);
+    }
+
+    private void validateWaitingRequest(WaitingRequest waitingRequest) {
+        if (waitingRequest.date() == null || waitingRequest.theme() == null || waitingRequest.time() == null) {
+            throw new IllegalArgumentException("유효하지 않은 요청입니다. 필요한 값이 누락되었습니다.");
+        }
     }
 }

@@ -31,6 +31,7 @@ public class ReservationService {
     private final WaitingRepository waitingRepository;
 
     public ReservationResponse save(ReservationRequest reservationRequest, MemberAuthInfo memberAuthInfo) {
+        validateReservationRequest(reservationRequest);
 
         if (reservationRequest.name() == null) {
             reservationRequest = new ReservationRequest(
@@ -108,6 +109,12 @@ public class ReservationService {
                 .map(it -> new ReservationResponse(it.getId(), it.getName(), it.getTheme().getName(), it.getDate(), it.getTime().getValue()))
                 .toList();
 
+    }
+
+    private void validateReservationRequest(ReservationRequest reservationRequest) {
+        if (reservationRequest.date() == null || reservationRequest.theme() == null || reservationRequest.time() == null) {
+            throw new IllegalArgumentException("유효하지 않은 요청입니다. 필요한 값이 누락되었습니다.");
+        }
     }
 
     private void validateDuplicateReservation(ReservationRequest reservationRequest) {
