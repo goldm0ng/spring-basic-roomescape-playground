@@ -22,4 +22,9 @@ public class AuthenticationService {
     public MemberAuthInfo extractMemberInfo(String token) {
         return jwtAuthenticationInfoExtractor.extractMemberAuthInfoFromToken(token);
     }
+
+    public MemberAuthInfo getMemberAuthInfoFromCookies(Cookie[] cookies) {
+        AuthenticationResponse authenticationResponse = extractToken(cookies);
+        return extractMemberInfo(authenticationResponse.accessToken());
+    }
 }

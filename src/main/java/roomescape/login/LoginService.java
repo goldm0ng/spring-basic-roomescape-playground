@@ -1,5 +1,6 @@
 package roomescape.login;
 
+import jakarta.servlet.http.Cookie;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import roomescape.authentication.MemberAuthInfo;
@@ -25,7 +26,8 @@ public class LoginService {
             return authenticationService.createToken(member);
     }
 
-    public LoginCheckResponse checkLogin(MemberAuthInfo memberAuthInfo) {
+    public LoginCheckResponse checkLogin(Cookie[] cookies) {
+        MemberAuthInfo memberAuthInfo = authenticationService.getMemberAuthInfoFromCookies(cookies);
 
         Member member= memberRepository.findByName(memberAuthInfo.name())
                 .orElseThrow(() -> new MemberNotFoundException("로그인 된 회원이 아닙니다."));
