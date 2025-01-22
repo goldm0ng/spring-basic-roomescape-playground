@@ -7,16 +7,15 @@ import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.Cookie;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import roomescape.authentication.AuthenticationExtractor;
 import roomescape.authentication.AuthenticationResponse;
 import roomescape.authentication.MemberAuthInfo;
 import roomescape.exception.JwtValidationException;
 
 import java.util.Arrays;
 
-@Component
 @RequiredArgsConstructor
-public class JwtAuthenticationInfoExtractor {
+public class JwtAuthenticationInfoExtractor implements AuthenticationExtractor {
 
     @Value("${roomescape.auth.jwt.secret}")
     private String secretKey;

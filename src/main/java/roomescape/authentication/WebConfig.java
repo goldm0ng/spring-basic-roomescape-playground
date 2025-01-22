@@ -10,11 +10,13 @@ import roomescape.authentication.jwt.JwtAuthenticationProvider;
 @RequiredArgsConstructor
 public class WebConfig {
 
-    private final JwtAuthenticationProvider jwtAuthenticationProvider;
-    private final JwtAuthenticationInfoExtractor jwtAuthenticationInfoExtractor;
+    @Bean
+    AuthenticationProvider authenticationProvider(){
+        return new JwtAuthenticationProvider();
+    }
 
     @Bean
-    public AuthenticationService authenticationService(){
-        return new AuthenticationService(jwtAuthenticationProvider, jwtAuthenticationInfoExtractor);
+    AuthenticationExtractor authenticationExtractor(){
+        return new JwtAuthenticationInfoExtractor();
     }
 }
