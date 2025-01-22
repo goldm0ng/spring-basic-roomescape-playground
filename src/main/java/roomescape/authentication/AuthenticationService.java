@@ -2,25 +2,26 @@ package roomescape.authentication;
 
 import jakarta.servlet.http.Cookie;
 import lombok.RequiredArgsConstructor;
-import roomescape.authentication.jwt.JwtAuthenticationInfoExtractor;
+import org.springframework.stereotype.Service;
 import roomescape.member.Member;
 
+@Service
 @RequiredArgsConstructor
 public class AuthenticationService {
 
     private final AuthenticationProvider authenticationProvider;
-    private final JwtAuthenticationInfoExtractor jwtAuthenticationInfoExtractor;
+    private final AuthenticationExtractor authenticationExtractor;
 
     public AuthenticationResponse createToken(Member member) {
         return authenticationProvider.createAuthenticationMethod(member);
     }
 
     public AuthenticationResponse extractToken(Cookie [] cookies){
-        return jwtAuthenticationInfoExtractor.extractTokenFromCookie(cookies);
+        return authenticationExtractor.extractTokenFromCookie(cookies);
     }
 
     public MemberAuthInfo extractMemberInfo(String token) {
-        return jwtAuthenticationInfoExtractor.extractMemberAuthInfoFromToken(token);
+        return authenticationExtractor.extractMemberAuthInfoFromToken(token);
     }
 
     public MemberAuthInfo getMemberAuthInfoFromCookies(Cookie[] cookies) {
