@@ -8,7 +8,7 @@ import roomescape.authentication.jwt.JwtAuthenticationProvider;
 
 @Configuration
 @RequiredArgsConstructor
-public class AuthenticationConfig {
+public class WebConfig {
 
     private final JwtAuthenticationProvider jwtAuthenticationProvider;
     private final JwtAuthenticationInfoExtractor jwtAuthenticationInfoExtractor;
